@@ -1,16 +1,15 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'jekyll/gist/version'
+require 'jekyll-gist/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "jekyll-gist"
   spec.version       = Jekyll::Gist::VERSION
   spec.authors       = ["Parker Moore"]
   spec.email         = ["parkrmoore@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{Liquid tag for displaying GitHub Gists in Jekyll sites.}
+  spec.homepage      = "https://github.com/jekyll/jekyll-gist"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

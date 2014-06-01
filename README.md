@@ -1,6 +1,6 @@
 # Jekyll::Gist
 
-TODO: Write a gem description
+Liquid tag for displaying GitHub Gists in Jekyll sites: `{% gist %}`.
 
 ## Installation
 
@@ -18,11 +18,29 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Use the tag as follows in your Jekyll pages, posts and collections:
+
+```liquid
+{% gist parkr/c08ee0f2726fd0e3909d %}
+```
+
+This will create the associated script tag:
+
+```html
+<script src="https://gist.github.com/parkr/c08ee0f2726fd0e3909d.js"> </script>
+```
+
+You may optionally specify a `filename` after the `gist_id`:
+
+```liquid
+{% gist parkr/c08ee0f2726fd0e3909d test.md %}
+```
+
+This will produce the correct URL to show just the specified file in your post rather than the entire Gist.
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/jekyll-gist/fork )
+1. Fork it ( https://github.com/jekyll/jekyll-gist/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
