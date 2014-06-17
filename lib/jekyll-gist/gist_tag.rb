@@ -13,7 +13,10 @@ module Jekyll
     #{@markup}
 
   Valid syntax:
-    for all gists: {% gist user/1234567 %}
+    {% gist user/1234567 %}
+    {% gist user/1234567 foo.js %}
+    {% gist 28949e1d5ee2273f9fd3 %}
+    {% gist 28949e1d5ee2273f9fd3 best.md %}
   eos
         end
       end
@@ -21,11 +24,7 @@ module Jekyll
       private
 
       def determine_arguments(input)
-        matched = if input.include?("/")
-          input.match(/\A([a-zA-Z0-9\/\-_]+) ?(\S*)\Z/)
-        else
-          input.match(/\A(\d+) ?(\S*)\Z/)
-        end
+        matched = input.match(/\A([\S]+|.*(?=\/).+)\s?(\S*)\Z/)
         [matched[1].strip, matched[2].strip] if matched && matched.length >= 3
       end
 
