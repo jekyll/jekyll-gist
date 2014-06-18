@@ -8,18 +8,26 @@ describe(Jekyll::Gist::GistTag) do
     doc.output  = Jekyll::Renderer.new(doc.site, doc).run
   end
 
-  context "simple gist" do
-    let(:gist) { 358471 }
 
-    it "produces the correct script tag" do
-      expect(output).to match(/<script src="https:\/\/gist.github.com\/#{gist}.js">\s<\/script>/)
-    end
-  end
-
-  context "private gist" do
-
-    context "when valid" do
+  context "valid gist" do
+    context "with user prefix" do
       let(:gist) { "mattr-/24081a1d93d2898ecf0f" }
+
+      it "produces the correct script tag" do
+        expect(output).to match(/<script src="https:\/\/gist.github.com\/#{gist}.js">\s<\/script>/)
+      end
+    end
+
+    context "without user prefix" do
+      let(:gist) { "28949e1d5ee2273f9fd3" }
+
+      it "produces the correct script tag" do
+        expect(output).to match(/<script src="https:\/\/gist.github.com\/#{gist}.js">\s<\/script>/)
+      end
+    end
+
+    context "classic Gist id style" do
+      let(:gist) { "1234321" }
 
       it "produces the correct script tag" do
         expect(output).to match(/<script src="https:\/\/gist.github.com\/#{gist}.js">\s<\/script>/)
@@ -35,23 +43,19 @@ describe(Jekyll::Gist::GistTag) do
         expect(output).to match(/<script src="https:\/\/gist.github.com\/#{gist}.js\?file=#{filename}">\s<\/script>/)
       end
     end
+  end
 
-    context "when invalid" do
-      let(:gist) { "mattr-24081a1d93d2898ecf0f" }
+
+  context "invalid gist" do
+
+    context "no gist id present" do
+      let(:gist) { "" }
 
       it "raises an error" do
         expect(->{ output }).to raise_error
       end
     end
 
-  end
-
-  context "no gist id present" do
-    let(:gist) { "" }
-
-    it "raises an error" do
-      expect(->{ output }).to raise_error
-    end
   end
 
 end
