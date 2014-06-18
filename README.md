@@ -2,6 +2,8 @@
 
 Liquid tag for displaying GitHub Gists in Jekyll sites: `{% gist %}`.
 
+[![Build Status](https://travis-ci.org/jekyll/jekyll-gist.svg?branch=master)](https://travis-ci.org/jekyll/jekyll-gist)
+
 ## Installation
 
 Add this line to your application's Gemfile:
