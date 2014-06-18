@@ -26,6 +26,14 @@ describe(Jekyll::Gist::GistTag) do
       end
     end
 
+    context "classic Gist id style" do
+      let(:gist) { "1234321" }
+
+      it "produces the correct script tag" do
+        expect(output).to match(/<script src="https:\/\/gist.github.com\/#{gist}.js">\s<\/script>/)
+      end
+    end
+
     context "with file specified" do
       let(:gist)     { "mattr-/24081a1d93d2898ecf0f" }
       let(:filename) { "myfile.ext" }
