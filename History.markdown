@@ -2,4 +2,8 @@
 
 ### Minor Enhancements
 
-* Update regex to allow for new sha-ish ids in Gist. (#1)
+  * Update regex to allow for new sha-ish ids in Gist. (#1)
+
+## 1.0.0 / 2014-06-01
+
+  * Birthday!
