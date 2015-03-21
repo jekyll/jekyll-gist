@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe(Jekyll::Gist::GistTag) do
-  let(:doc) { doc_with_content(content) }
+  let(:doc) do
+    doc_with_content(content).tap { |doc| doc.data['gist_id'] = global_gist_id if respond_to? :global_gist_id }
+  end
   let(:content)  { "{% gist #{gist} %}" }
   let(:output) do
     doc.content = content
@@ -56,6 +58,24 @@ describe(Jekyll::Gist::GistTag) do
       end
     end
 
+  end
+
+  context "A post with gist_id in front matter" do
+    let(:global_gist_id) { 'global-gist-id' }
+    let(:local_gist_id) { 'local-gist-id' }
+    let(:filename) { 'my-file.md' }
+    context "with a gist string that has another gist_id" do
+      let(:gist) { "#{local_gist_id} #{filename}" }
+      it 'will use the local gist id in the url' do
+        expect(output).to match(/<script src="https:\/\/gist.github.com\/#{local_gist_id}.js\?file=#{filename}">\s<\/script>/)
+      end
+    end
+    context "with an empty gist_id in the gist string" do
+      let(:gist) { filename }
+      it 'will use the gist_id from the front matter' do
+        expect(output).to match(/<script src="https:\/\/gist.github.com\/#{global_gist_id}.js\?file=#{filename}">\s<\/script>/)
+      end
+    end
   end
 
 end
