@@ -43,6 +43,35 @@ describe(Jekyll::Gist::GistTag) do
         expect(output).to match(/<script src="https:\/\/gist.github.com\/#{gist}.js\?file=#{filename}">\s<\/script>/)
       end
     end
+
+    context "with variable gist id" do
+      let(:gist)     { "page.gist_id" }
+      let(:output) do
+        doc.data['gist_id'] = "1342013"
+        doc.content = content
+        doc.output  = Jekyll::Renderer.new(doc.site, doc).run
+      end
+
+      it "produces the correct script tag" do
+        expect(output).to match(/<script src="https:\/\/gist.github.com\/#{doc.data['gist_id']}.js">\s<\/script>/)
+      end
+    end
+
+    context "with variable gist id and filename" do
+      let(:gist)     { "page.gist_id" }
+      let(:filename) { "page.gist_filename" }
+      let(:content)  { "{% gist #{gist} #{filename} %}" }
+      let(:output) do
+        doc.data['gist_id'] = "1342013"
+        doc.data['gist_filename'] = "atom.xml"
+        doc.content = content
+        doc.output  = Jekyll::Renderer.new(doc.site, doc).run
+      end
+
+      it "produces the correct script tag" do
+        expect(output).to match(/<script src="https:\/\/gist.github.com\/#{doc.data['gist_id']}.js\?file=#{doc.data['gist_filename']}">\s<\/script>/)
+      end
+    end
   end
 
 
