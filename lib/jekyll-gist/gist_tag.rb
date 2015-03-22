@@ -5,6 +5,12 @@ module Jekyll
       def render(context)
         if tag_contents = determine_arguments(@markup.strip)
           gist_id, filename = tag_contents[0], tag_contents[1]
+          if context[gist_id]
+            gist_id = context[gist_id]
+          end
+          if context[filename]
+            filename = context[filename]
+          end
           gist_script_tag(gist_id, filename)
         else
           raise ArgumentError.new <<-eos
