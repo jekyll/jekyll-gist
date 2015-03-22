@@ -1,5 +1,7 @@
 ## HEAD
 
+  * Allow variables as parameters (#4)
+
 ## 1.1.0 / 2014-06-18
 
 ### Minor Enhancements
