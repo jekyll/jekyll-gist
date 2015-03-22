@@ -1,6 +1,11 @@
 ## HEAD
 
+### Minor Enhancements
+
   * Allow variables as parameters (#4)
+
+### Development Fixes
+
   * Fix RSpec deprecation warning (#5)
 
 ## 1.1.0 / 2014-06-18
