@@ -1,3 +1,7 @@
+## HEAD
+
+  * Use `has_key?` (#6)
+
 ## 1.2.0 / 2015-03-21
 
 ### Minor Enhancements
