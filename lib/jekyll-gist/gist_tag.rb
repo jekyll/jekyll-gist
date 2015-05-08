@@ -1,3 +1,6 @@
+require 'cgi'
+require 'open-uri'
+
 module Jekyll
   module Gist
     class GistTag < Liquid::Tag
@@ -11,7 +14,9 @@ module Jekyll
           if context.has_key?(filename)
             filename = context[filename]
           end
-          gist_script_tag(gist_id, filename)
+          noscript_tag = gist_noscript_tag(gist_id, filename)
+          script_tag = gist_script_tag(gist_id, filename)
+          "#{noscript_tag}#{script_tag}"
         else
           raise ArgumentError.new <<-eos
   Syntax error in tag 'gist' while parsing the following markup:
@@ -40,6 +45,16 @@ module Jekyll
         else
           "<script src=\"https://gist.github.com/#{gist_id}.js?file=#{filename}\"> </script>"
         end
+      end
+
+      def gist_noscript_tag(gist_id, filename = nil)
+        if filename.empty?
+          uri = "https://gist.githubusercontent.com/#{gist_id}/raw"
+        else
+          uri = "https://gist.githubusercontent.com/#{gist_id}/raw/#{filename}"
+        end
+        code = open(uri).read.chomp
+        "<noscript><pre>#{CGI.escapeHTML(code)}</pre></noscript>"
       end
 
     end
