@@ -48,15 +48,24 @@ module Jekyll
       end
 
       def gist_noscript_tag(gist_id, filename = nil)
+        code = fetch_raw_code(gist_id, filename)
+        if !code.nil?
+          "<noscript><pre>#{CGI.escapeHTML(code)}</pre></noscript>"
+        end
+      end
+
+      def fetch_raw_code(gist_id, filename = nil)
         if filename.empty?
           uri = "https://gist.githubusercontent.com/#{gist_id}/raw"
         else
           uri = "https://gist.githubusercontent.com/#{gist_id}/raw/#{filename}"
         end
-        code = open(uri).read.chomp
-        "<noscript><pre>#{CGI.escapeHTML(code)}</pre></noscript>"
+        begin
+          open(uri).read.chomp
+        rescue OpenURI::HTTPError => e
+          nil
+        end
       end
-
     end
   end
 end
