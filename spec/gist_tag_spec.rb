@@ -112,7 +112,7 @@ describe(Jekyll::Gist::GistTag) do
         expect(output).to match(/<script src="https:\/\/gist.github.com\/#{gist_id}.js\?file=#{gist_filename}">\s<\/script>/)
       end
 
-      it "doesn't produces the noscript tag" do 
+      it "does not produce the noscript tag" do 
         expect(output).to_not match(/<noscript><pre>&lt;test&gt;true&lt;\/test&gt;<\/pre><\/noscript>\n/)
       end
 
