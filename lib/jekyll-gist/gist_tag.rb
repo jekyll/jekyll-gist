@@ -66,6 +66,8 @@ module Jekyll
           open(uri).read.chomp
         rescue SocketError
           nil
+        rescue OpenURI::HTTPError
+          nil
         end
       end
     end
