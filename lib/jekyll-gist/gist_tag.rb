@@ -51,6 +51,8 @@ module Jekyll
         code = fetch_raw_code(gist_id, filename)
         if !code.nil?
           "<noscript><pre>#{CGI.escapeHTML(code)}</pre></noscript>"
+        else
+          Jekyll.logger.warn "Warning:", "The <noscript> tag for your gist #{gist_id} could not be generated. This will affect users who do not have JavaScript available or enabled in their browsers."
         end
       end
 
