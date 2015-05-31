@@ -35,11 +35,28 @@ module Jekyll
       end
 
       def gist_script_tag(gist_id, filename = nil)
-        if filename.empty?
-          "<script src=\"https://gist.github.com/#{gist_id}.js\"> </script>"
-        else
-          "<script src=\"https://gist.github.com/#{gist_id}.js?file=#{filename}\"> </script>"
-        end
+        "<script type='text/javascript'>
+          (function(gistId, filename) {
+            var callbackName  = 'gist'+gistId,
+              uri             = '//gist.github.com/'+gistId+'.json?callback='+callbackName;
+            if (filename !== null && filename !== '') {
+              uri += '&file='+filename;
+            }
+            window[callbackName] = function (gistData) {
+              delete window[callbackName];
+              var html = '<link rel=\"stylesheet\" href=\"'+gistData.stylesheet+'\"></link>';
+              html += gistData.div;
+              element = document.getElementById('gist'+gistId);
+              if (typeof(element) !== 'undefined') {
+                element.innerHTML = html; 
+              }
+              script.parentNode.removeChild(script);
+            };
+            var script = document.createElement('script');
+            script.setAttribute('src', uri);
+            document.body.appendChild(script);
+          }('#{gist_id}', '#{filename}'));
+        </script><div id=\"gist#{gist_id}\"><a href=\"//gist.github.com/#{gist_id}\">#{gist_id}</a></div>"
       end
 
     end
@@ -47,3 +64,4 @@ module Jekyll
 end
 
 Liquid::Template.register_tag('gist', Jekyll::Gist::GistTag)
+
