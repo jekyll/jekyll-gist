@@ -52,7 +52,9 @@ module Jekyll
         if !code.nil?
           "<noscript><pre>#{CGI.escapeHTML(code)}</pre></noscript>"
         else
-          Jekyll.logger.warn "Warning:", "The <noscript> tag for your gist #{gist_id} could not be generated. This will affect users who do not have JavaScript available or enabled in their browsers."
+          Jekyll.logger.warn "Warning:", "The <noscript> tag for your gist #{gist_id} could not"
+          Jekyll.logger.warn "", "be generated. This will affect users who do not have"
+          Jekyll.logger.warn "", "JavaScript available or enabled in their browsers."
         end
       end
 
