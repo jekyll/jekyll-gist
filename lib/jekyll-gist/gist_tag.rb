@@ -59,13 +59,10 @@ module Jekyll
       end
 
       def fetch_raw_code(gist_id, filename = nil)
-        if filename.empty?
-          uri = "https://gist.githubusercontent.com/#{gist_id}/raw"
-        else
-          uri = "https://gist.githubusercontent.com/#{gist_id}/raw/#{filename}"
-        end
         begin
-          open(uri).read.chomp
+          url = "https://gist.githubusercontent.com/#{gist_id}/raw"
+          url = "#{url}/#{filename}" unless filename.empty?
+          open(url).read.chomp
         rescue SocketError
           nil
         rescue OpenURI::HTTPError
