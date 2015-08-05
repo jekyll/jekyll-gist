@@ -1,3 +1,7 @@
+## HEAD
+
+  * Added an `noscript` fallback for browsers without JavaScript enabled. (#7)
+
 ## 1.2.1 / 2015-03-22
 
   * Use `has_key?` (#6)
