@@ -1,6 +1,8 @@
 TEST_DIR = File.dirname(__FILE__)
 TMP_DIR  = File.expand_path("../tmp", TEST_DIR)
 
+require 'webmock/rspec'
+require 'cgi'
 require 'jekyll'
 require File.expand_path("../lib/jekyll-gist.rb", TEST_DIR)
 

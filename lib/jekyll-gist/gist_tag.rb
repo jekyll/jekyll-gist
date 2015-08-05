@@ -1,3 +1,6 @@
+require 'cgi'
+require 'open-uri'
+
 module Jekyll
   module Gist
     class GistTag < Liquid::Tag
@@ -11,7 +14,9 @@ module Jekyll
           if context.has_key?(filename)
             filename = context[filename]
           end
-          gist_script_tag(gist_id, filename)
+          noscript_tag = gist_noscript_tag(gist_id, filename)
+          script_tag = gist_script_tag(gist_id, filename)
+          "#{noscript_tag}#{script_tag}"
         else
           raise ArgumentError.new <<-eos
   Syntax error in tag 'gist' while parsing the following markup:
@@ -35,13 +40,33 @@ module Jekyll
       end
 
       def gist_script_tag(gist_id, filename = nil)
-        if filename.empty?
-          "<script src=\"https://gist.github.com/#{gist_id}.js\"> </script>"
+        url = "https://gist.github.com/#{gist_id}.js"
+        url = "#{url}?file=#{filename}" unless filename.empty?
+        "<script src=\"#{url}\"> </script>"
+      end
+
+      def gist_noscript_tag(gist_id, filename = nil)
+        code = fetch_raw_code(gist_id, filename)
+        if !code.nil?
+          "<noscript><pre>#{CGI.escapeHTML(code)}</pre></noscript>"
         else
-          "<script src=\"https://gist.github.com/#{gist_id}.js?file=#{filename}\"> </script>"
+          Jekyll.logger.warn "Warning:", "The <noscript> tag for your gist #{gist_id} could not"
+          Jekyll.logger.warn "", "be generated. This will affect users who do not have"
+          Jekyll.logger.warn "", "JavaScript available or enabled in their browsers."
         end
       end
 
+      def fetch_raw_code(gist_id, filename = nil)
+        begin
+          url = "https://gist.githubusercontent.com/#{gist_id}/raw"
+          url = "#{url}/#{filename}" unless filename.empty?
+          open(url).read.chomp
+        rescue SocketError
+          nil
+        rescue OpenURI::HTTPError
+          nil
+        end
+      end
     end
   end
 end
