@@ -66,7 +66,7 @@ module Jekyll
             read_timeout: 3, open_timeout: 3) do |http|
             request = Net::HTTP::Get.new uri
             response = http.request(request)
-            response.body.chomp
+            response.body
           end
         rescue SocketError
           nil
