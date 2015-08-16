@@ -1,5 +1,5 @@
 require 'cgi'
-require 'open-uri'
+require 'net/http'
 
 module Jekyll
   module Gist
@@ -57,13 +57,24 @@ module Jekyll
       end
 
       def fetch_raw_code(gist_id, filename = nil)
+        url = "https://gist.githubusercontent.com/#{gist_id}/raw"
+        url = "#{url}/#{filename}" unless filename.empty?
         begin
-          url = "https://gist.githubusercontent.com/#{gist_id}/raw"
-          url = "#{url}/#{filename}" unless filename.empty?
-          open(url).read.chomp
+          uri = URI(url)
+          Net::HTTP.start(uri.host, uri.port,
+            use_ssl: uri.scheme == 'https', 
+            read_timeout: 3, open_timeout: 3) do |http|
+            request = Net::HTTP::Get.new uri
+            response = http.request(request)
+            response.body
+          end
         rescue SocketError
           nil
-        rescue OpenURI::HTTPError
+        rescue Net::HTTPError
+          nil
+        rescue Net::OpenTimeout
+          nil
+        rescue Net::ReadTimeout
           nil
         end
       end
