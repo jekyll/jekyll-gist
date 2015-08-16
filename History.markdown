@@ -1,3 +1,7 @@
+## HEAD
+
+  * Replaced `OpenURI` with `Net::HTTP` and introduced timeout of 3 seconds (#11)
+
 ## 1.3.0 / 2015-08-05
 
   * Added an `noscript` fallback for browsers without JavaScript enabled. (#7)
