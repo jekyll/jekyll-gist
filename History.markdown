@@ -1,3 +1,7 @@
+## HEAD
+
+  * Re-add support for Ruby 1.9.3. Fixes #11 for 1.9.3 (#14)
+
 ## 1.3.1 / 2015-08-16
 
   * Replaced `OpenURI` with `Net::HTTP` and introduced timeout of 3 seconds (#11)
