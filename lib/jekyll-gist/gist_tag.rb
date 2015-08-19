@@ -1,6 +1,9 @@
 require 'cgi'
 require 'net/http'
 
+Net::OpenTimeout = Class.new(RuntimeError) unless Net.const_defined?(:OpenTimeout)
+Net::ReadTimeout = Class.new(RuntimeError) unless Net.const_defined?(:ReadTimeout)
+
 module Jekyll
   module Gist
     class GistTag < Liquid::Tag
@@ -62,19 +65,13 @@ module Jekyll
         begin
           uri = URI(url)
           Net::HTTP.start(uri.host, uri.port,
-            use_ssl: uri.scheme == 'https', 
+            use_ssl: uri.scheme == 'https',
             read_timeout: 3, open_timeout: 3) do |http|
-            request = Net::HTTP::Get.new uri
+            request = Net::HTTP::Get.new uri.to_s
             response = http.request(request)
             response.body
           end
-        rescue SocketError
-          nil
-        rescue Net::HTTPError
-          nil
-        rescue Net::OpenTimeout
-          nil
-        rescue Net::ReadTimeout
+        rescue SocketError, Net::HTTPError, Net::OpenTimeout, Net::ReadTimeout
           nil
         end
       end
