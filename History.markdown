@@ -1,3 +1,7 @@
+## 1.3.3 / 2015-08-20
+
+  * Fix gemspec to allow Ruby 1.9.3 (relates to #14)
+
 ## 1.3.2 / 2016-08-19
 
   * Re-add support for Ruby 1.9.3. Fixes #11 for 1.9.3 (#14)
