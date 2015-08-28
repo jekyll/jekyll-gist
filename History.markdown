@@ -1,3 +1,7 @@
+## HEAD
+
+  * Catch `TimeoutError` to further support 1.9.3 (#16)
+
 ## 1.3.3 / 2015-08-20
 
   * Fix gemspec to allow Ruby 1.9.3 (relates to #14)
