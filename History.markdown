@@ -1,3 +1,7 @@
+## HEAD
+
+  * Test against Jekyll 3, 2, and the github-pages gem (#19)
+
 ## 1.3.4 / 2015-08-28
 
   * Catch `TimeoutError` to further support 1.9.3 (#16)
