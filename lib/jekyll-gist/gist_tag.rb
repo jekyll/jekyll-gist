@@ -9,7 +9,7 @@ module Jekyll
     class GistTag < Liquid::Tag
 
       def render(context)
-        @encoding = context.registers[:site].config['encoding']
+        @encoding = context.registers[:site].config['encoding'] || 'utf-8'
         if tag_contents = determine_arguments(@markup.strip)
           gist_id, filename = tag_contents[0], tag_contents[1]
           if context.has_key?(gist_id)
