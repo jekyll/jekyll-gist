@@ -9,6 +9,7 @@ module Jekyll
     class GistTag < Liquid::Tag
 
       def render(context)
+        @encoding = context.registers[:site].config['encoding']
         if tag_contents = determine_arguments(@markup.strip)
           gist_id, filename = tag_contents[0], tag_contents[1]
           if context.has_key?(gist_id)
@@ -69,7 +70,7 @@ module Jekyll
             read_timeout: 3, open_timeout: 3) do |http|
             request = Net::HTTP::Get.new uri.to_s
             response = http.request(request)
-            response.body
+            response.body.force_encoding(@encoding)
           end
         rescue SocketError, Net::HTTPError, Net::OpenTimeout, Net::ReadTimeout, TimeoutError
           nil
