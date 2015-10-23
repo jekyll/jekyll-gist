@@ -52,6 +52,7 @@ module Jekyll
       def gist_noscript_tag(gist_id, filename = nil)
         code = fetch_raw_code(gist_id, filename)
         if !code.nil?
+          code = code.force_encoding(@encoding)
           "<noscript><pre>#{CGI.escapeHTML(code)}</pre></noscript>"
         else
           Jekyll.logger.warn "Warning:", "The <noscript> tag for your gist #{gist_id} could not"
@@ -70,7 +71,7 @@ module Jekyll
             read_timeout: 3, open_timeout: 3) do |http|
             request = Net::HTTP::Get.new uri.to_s
             response = http.request(request)
-            response.body.force_encoding(@encoding)
+            response.body
           end
         rescue SocketError, Net::HTTPError, Net::OpenTimeout, Net::ReadTimeout, TimeoutError
           nil
