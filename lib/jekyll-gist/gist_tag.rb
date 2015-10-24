@@ -9,6 +9,7 @@ module Jekyll
     class GistTag < Liquid::Tag
 
       def render(context)
+        @encoding = context.registers[:site].config['encoding'] || 'utf-8'
         if tag_contents = determine_arguments(@markup.strip)
           gist_id, filename = tag_contents[0], tag_contents[1]
           if context.has_key?(gist_id)
@@ -51,6 +52,7 @@ module Jekyll
       def gist_noscript_tag(gist_id, filename = nil)
         code = fetch_raw_code(gist_id, filename)
         if !code.nil?
+          code = code.force_encoding(@encoding)
           "<noscript><pre>#{CGI.escapeHTML(code)}</pre></noscript>"
         else
           Jekyll.logger.warn "Warning:", "The <noscript> tag for your gist #{gist_id} could not"
