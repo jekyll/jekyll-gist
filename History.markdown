@@ -1,4 +1,4 @@
-## HEAD
+## 1.3.5 / 2015-10-23
 
   * Fix encoding error for `noscript` code (#23)
   * Test against Jekyll 3, 2, and the github-pages gem (#19)
