@@ -18,6 +18,13 @@ Or install it yourself as:
 
     $ gem install jekyll-gist
 
+Finally, add the following to your site's `_config.yml`:
+
+```
+gems:
+  - jekyll-gist
+```
+
 ## Usage
 
 Use the tag as follows in your Jekyll pages, posts and collections:
