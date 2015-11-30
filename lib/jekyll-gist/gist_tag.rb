@@ -96,7 +96,7 @@ module Jekyll
           match[1] if match
         end
 
-        file[:content] if file && !file[:truncated]
+        file[:content] if file
       end
     end
   end
