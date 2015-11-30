@@ -9,7 +9,7 @@ describe(Jekyll::Gist::GistTag) do
     doc.output  = Jekyll::Renderer.new(doc.site, doc).run
   end
 
-  before_each { ENV["JEKYLL_GITHUB_TOKEN"] = nil }
+  before(:each) { ENV["JEKYLL_GITHUB_TOKEN"] = nil }
 
   context "valid gist" do
     context "with user prefix" do
