@@ -47,6 +47,8 @@ You may optionally specify a `filename` after the `gist_id`:
 
 This will produce the correct URL to show just the specified file in your post rather than the entire Gist.
 
+**Pro-tip**: If you provide a personal access token with Gist scope, as the environmental variable `JEKYLL_GITHUB_TOKEN`, Jekyll Gist will use the Gist API to speed up site generation.
+
 ## Contributing
 
 1. Fork it ( https://github.com/jekyll/jekyll-gist/fork )
