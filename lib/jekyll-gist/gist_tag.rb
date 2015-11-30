@@ -62,20 +62,40 @@ module Jekyll
       end
 
       def fetch_raw_code(gist_id, filename = nil)
+        content = code_from_api(gist_id, filename)
+        return content if content
+
         url = "https://gist.githubusercontent.com/#{gist_id}/raw"
         url = "#{url}/#{filename}" unless filename.empty?
-        begin
-          uri = URI(url)
-          Net::HTTP.start(uri.host, uri.port,
-            use_ssl: uri.scheme == 'https',
-            read_timeout: 3, open_timeout: 3) do |http|
-            request = Net::HTTP::Get.new uri.to_s
-            response = http.request(request)
-            response.body
-          end
-        rescue SocketError, Net::HTTPError, Net::OpenTimeout, Net::ReadTimeout, TimeoutError
-          nil
+        uri = URI(url)
+        Net::HTTP.start(uri.host, uri.port,
+          use_ssl: uri.scheme == 'https',
+          read_timeout: 3, open_timeout: 3) do |http|
+          request = Net::HTTP::Get.new uri.to_s
+          response = http.request(request)
+          response.body
         end
+      rescue SocketError, Net::HTTPError, Net::OpenTimeout, Net::ReadTimeout, TimeoutError
+        nil
+      end
+
+      private
+
+      def code_from_api(gist_id, filename = nil)
+        return unless ENV["JEKYLL_GITHUB_TOKEN"]
+
+        client = Octokit::Client.new :access_token => ENV["JEKYLL_GITHUB_TOKEN"]
+        gist = client.gist gist_id
+
+        file = if filename && gist.files[filename]
+          gist.files.filename
+        else
+          files.first
+        end
+
+        file.content unless file.truncated
+      rescue Octokit => e
+        nil
       end
     end
   end
