@@ -18,7 +18,7 @@ describe(Jekyll::Gist::GistTag) do
       it "produces the correct script tag" do
         expect(output).to match(/<script src="https:\/\/gist.github.com\/#{gist}.js">\s<\/script>/)
       end
-      it "produces the correct noscript tag" do 
+      it "produces the correct noscript tag" do
         expect(output).to match(/<noscript><pre>&lt;test&gt;true&lt;\/test&gt;<\/pre><\/noscript>\n/)
       end
     end
@@ -30,7 +30,7 @@ describe(Jekyll::Gist::GistTag) do
       it "produces the correct script tag" do
         expect(output).to match(/<script src="https:\/\/gist.github.com\/#{gist}.js">\s<\/script>/)
       end
-      it "produces the correct noscript tag" do 
+      it "produces the correct noscript tag" do
         expect(output).to match(/<noscript><pre>&lt;test&gt;true&lt;\/test&gt;<\/pre><\/noscript>\n/)
       end
     end
@@ -42,7 +42,7 @@ describe(Jekyll::Gist::GistTag) do
       it "produces the correct script tag" do
         expect(output).to match(/<script src="https:\/\/gist.github.com\/#{gist}.js">\s<\/script>/)
       end
-      it "produces the correct noscript tag" do 
+      it "produces the correct noscript tag" do
         expect(output).to match(/<noscript><pre>&lt;test&gt;true&lt;\/test&gt;<\/pre><\/noscript>\n/)
       end
     end
@@ -56,7 +56,7 @@ describe(Jekyll::Gist::GistTag) do
       it "produces the correct script tag" do
         expect(output).to match(/<script src="https:\/\/gist.github.com\/#{gist}.js\?file=#{filename}">\s<\/script>/)
       end
-      it "produces the correct noscript tag" do 
+      it "produces the correct noscript tag" do
         expect(output).to match(/<noscript><pre>&lt;test&gt;true&lt;\/test&gt;<\/pre><\/noscript>\n/)
       end
     end
@@ -74,7 +74,7 @@ describe(Jekyll::Gist::GistTag) do
       it "produces the correct script tag" do
         expect(output).to match(/<script src="https:\/\/gist.github.com\/#{doc.data['gist_id']}.js">\s<\/script>/)
       end
-      it "produces the correct noscript tag" do 
+      it "produces the correct noscript tag" do
         expect(output).to match(/<noscript><pre>&lt;test&gt;true&lt;\/test&gt;<\/pre><\/noscript>\n/)
       end
     end
@@ -97,12 +97,12 @@ describe(Jekyll::Gist::GistTag) do
         expect(output).to match(/<script src="https:\/\/gist.github.com\/#{doc.data['gist_id']}.js\?file=#{doc.data['gist_filename']}">\s<\/script>/)
       end
 
-      it "produces the correct noscript tag" do 
+      it "produces the correct noscript tag" do
         expect(output).to match(/<noscript><pre>&lt;test&gt;true&lt;\/test&gt;<\/pre><\/noscript>\n/)
       end
     end
 
-    context "with valid gist id and invalid filename" do 
+    context "with valid gist id and invalid filename" do
       before { stub_request(:get, "https://gist.githubusercontent.com/#{gist_id}/raw/#{gist_filename}").to_return(status: 404) }
       let(:gist_id)     { "mattr-/24081a1d93d2898ecf0f" }
       let(:gist_filename) { "myfile.ext" }
@@ -112,14 +112,25 @@ describe(Jekyll::Gist::GistTag) do
         expect(output).to match(/<script src="https:\/\/gist.github.com\/#{gist_id}.js\?file=#{gist_filename}">\s<\/script>/)
       end
 
-      it "does not produce the noscript tag" do 
+      it "does not produce the noscript tag" do
         expect(output).to_not match(/<noscript><pre>&lt;test&gt;true&lt;\/test&gt;<\/pre><\/noscript>\n/)
       end
 
     end
 
-  end
+    context "with noscript disabled" do
+      let(:doc) { doc_with_content(content, { "gist" => { "noscript" => false } }) }
+      let(:output) do
+        doc.content = content
+        doc.output  = Jekyll::Renderer.new(doc.site, doc).run
+      end
 
+      it "does not produce the noscript tag" do
+        expect(output).to_not match(/<noscript>/)
+      end
+    end
+
+  end
 
   context "invalid gist" do
 
