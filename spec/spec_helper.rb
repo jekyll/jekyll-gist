@@ -7,7 +7,6 @@ require 'jekyll'
 require File.expand_path("../lib/jekyll-gist.rb", TEST_DIR)
 
 Jekyll.logger.log_level = :error
-STDERR.reopen(test(?e, '/dev/null') ? '/dev/null' : 'NUL:')
 
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
@@ -41,5 +40,10 @@ RSpec.configure do |config|
       "destination" => dest_dir
     }))
     Jekyll::Site.new(conf)
+  end
+
+  def fixture(name)
+    path = File.expand_path "./fixtures/#{name}.json", File.dirname(__FILE__)
+    File.open(path).read
   end
 end

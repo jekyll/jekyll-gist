@@ -121,6 +121,10 @@ describe(Jekyll::Gist::GistTag) do
 
     context "with token" do
       before { ENV["JEKYLL_GITHUB_TOKEN"] = "1234" }
+      before {
+        stub_request(:get, "https://api.github.com/gists/1342013").
+          to_return(:status => 200, :body => fixture("single-file"), :headers => {"Content-Type" => "application/json"})
+      }
       let(:gist_id)  { "1342013" }
       let(:gist)     { "page.gist_id" }
       let(:output) do
@@ -130,9 +134,20 @@ describe(Jekyll::Gist::GistTag) do
       end
 
       it "produces the noscript tag" do
-        expect(output).to match(/<noscript><pre>&lt;test&gt;true&lt;\/test&gt;<\/pre><\/noscript>\n/)
+        expect(output).to match(/<noscript><pre>contents of gist<\/pre><\/noscript>/)
       end
 
+      context "with a filename" do
+        before {
+          stub_request(:get, "https://api.github.com/gists/1342013").
+            to_return(:status => 200, :body => fixture("multiple-files"), :headers => {"Content-Type" => "application/json"})
+        }
+        let(:content)  { "{% gist 1342013 hello-world.rb %}" }
+
+        it "produces the noscript tag" do
+          expect(output).to match(/<noscript><pre>puts &#39;hello world&#39;<\/pre><\/noscript>/)
+        end
+      end
     end
 
   end

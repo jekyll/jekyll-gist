@@ -1,5 +1,6 @@
 require 'cgi'
 require 'net/http'
+require 'octokit'
 
 Net::OpenTimeout = Class.new(RuntimeError) unless Net.const_defined?(:OpenTimeout)
 Net::ReadTimeout = Class.new(RuntimeError) unless Net.const_defined?(:ReadTimeout)
@@ -62,8 +63,7 @@ module Jekyll
       end
 
       def fetch_raw_code(gist_id, filename = nil)
-        content = code_from_api(gist_id, filename)
-        return content if content
+        return code_from_api(gist_id, filename) if ENV["JEKYLL_GITHUB_TOKEN"]
 
         url = "https://gist.githubusercontent.com/#{gist_id}/raw"
         url = "#{url}/#{filename}" unless filename.empty?
@@ -82,20 +82,21 @@ module Jekyll
       private
 
       def code_from_api(gist_id, filename = nil)
-        return unless ENV["JEKYLL_GITHUB_TOKEN"]
-
         client = Octokit::Client.new :access_token => ENV["JEKYLL_GITHUB_TOKEN"]
         gist = client.gist gist_id
 
-        file = if filename && gist.files[filename]
-          gist.files.filename
+        file = if filename.to_s.empty?
+          # No file specified, return the value of the first key/value pair
+          gist.files.first[1]
         else
-          files.first
+          # .files is a hash of :"filename.extension" => data pairs
+          # Rather than using to_sym on arbitrary user input,
+          # Find our file by calling to_s on the keys
+          match = gist.files.find { |name, data| name.to_s == filename}
+          match[1] if match
         end
 
-        file.content unless file.truncated
-      rescue Octokit => e
-        nil
+        file[:content] if file && !file[:truncated]
       end
     end
   end
