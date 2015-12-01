@@ -162,6 +162,7 @@ describe(Jekyll::Gist::GistTag) do
         expect(output).to_not match(/<noscript>/)
       end
     end
+    
   end
 
   context "invalid gist" do
