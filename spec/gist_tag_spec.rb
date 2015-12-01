@@ -147,6 +147,8 @@ describe(Jekyll::Gist::GistTag) do
         it "produces the noscript tag" do
           expect(output).to match(/<noscript><pre>puts &#39;hello world&#39;<\/pre><\/noscript>/)
         end
+      end
+    end
 
     context "with noscript disabled" do
       let(:doc) { doc_with_content(content, { "gist" => { "noscript" => false } }) }
@@ -160,7 +162,6 @@ describe(Jekyll::Gist::GistTag) do
         expect(output).to_not match(/<noscript>/)
       end
     end
-
   end
 
   context "invalid gist" do
