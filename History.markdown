@@ -1,3 +1,7 @@
+## HEAD
+
+  * Allow `noscript` fallback to be disabled (#29)
+
 ## 1.3.5 / 2015-10-23
 
   * Fix encoding error for `noscript` code (#23)
