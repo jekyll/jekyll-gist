@@ -1,6 +1,7 @@
 ## HEAD
 
   * Allow `noscript` fallback to be disabled (#29)
+  * Use Octokit to fetch Gist content when passed `JEKYLL_GITHUB_TOKEN` in env(#28)
 
 ## 1.3.5 / 2015-10-23
 
