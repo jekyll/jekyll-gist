@@ -1,5 +1,6 @@
 require 'cgi'
 require 'net/http'
+require 'octokit'
 
 Net::OpenTimeout = Class.new(RuntimeError) unless Net.const_defined?(:OpenTimeout)
 Net::ReadTimeout = Class.new(RuntimeError) unless Net.const_defined?(:ReadTimeout)
@@ -55,7 +56,13 @@ module Jekyll
         code = fetch_raw_code(gist_id, filename)
         if !code.nil?
           code = code.force_encoding(@encoding)
-          "<noscript><pre>#{CGI.escapeHTML(code)}</pre></noscript>"
+          code = CGI.escapeHTML(code)
+
+          # CGI.escapeHTML behavior differs in Ruby < 2.0
+          # See https://github.com/jekyll/jekyll-gist/pull/28
+          code = code.gsub("'", "&#39;") if RUBY_VERSION < "2.0"
+
+          "<noscript><pre>#{code}</pre></noscript>"
         else
           Jekyll.logger.warn "Warning:", "The <noscript> tag for your gist #{gist_id} could not"
           Jekyll.logger.warn "", "be generated. This will affect users who do not have"
@@ -64,20 +71,43 @@ module Jekyll
       end
 
       def fetch_raw_code(gist_id, filename = nil)
+        return code_from_api(gist_id, filename) if ENV["JEKYLL_GITHUB_TOKEN"]
+
         url = "https://gist.githubusercontent.com/#{gist_id}/raw"
         url = "#{url}/#{filename}" unless filename.empty?
-        begin
-          uri = URI(url)
-          Net::HTTP.start(uri.host, uri.port,
-            use_ssl: uri.scheme == 'https',
-            read_timeout: 3, open_timeout: 3) do |http|
-            request = Net::HTTP::Get.new uri.to_s
-            response = http.request(request)
-            response.body
-          end
-        rescue SocketError, Net::HTTPError, Net::OpenTimeout, Net::ReadTimeout, TimeoutError
-          nil
+        uri = URI(url)
+        Net::HTTP.start(uri.host, uri.port,
+          use_ssl: uri.scheme == 'https',
+          read_timeout: 3, open_timeout: 3) do |http|
+          request = Net::HTTP::Get.new uri.to_s
+          response = http.request(request)
+          response.body
         end
+      rescue SocketError, Net::HTTPError, Net::OpenTimeout, Net::ReadTimeout, TimeoutError
+        nil
+      end
+
+      private
+
+      def code_from_api(gist_id, filename = nil)
+        gist = GistTag.client.gist gist_id
+
+        file = if filename.to_s.empty?
+          # No file specified, return the value of the first key/value pair
+          gist.files.first[1]
+        else
+          # .files is a hash of :"filename.extension" => data pairs
+          # Rather than using to_sym on arbitrary user input,
+          # Find our file by calling to_s on the keys
+          match = gist.files.find { |name, data| name.to_s == filename }
+          match[1] if match
+        end
+
+        file[:content] if file
+      end
+
+      def self.client
+        @client ||= Octokit::Client.new :access_token => ENV["JEKYLL_GITHUB_TOKEN"]
       end
     end
   end

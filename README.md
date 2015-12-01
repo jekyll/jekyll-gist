@@ -47,6 +47,8 @@ You may optionally specify a `filename` after the `gist_id`:
 
 This will produce the correct URL to show just the specified file in your post rather than the entire Gist.
 
+**Pro-tip**: If you provide a personal access token with Gist scope, as the environmental variable `JEKYLL_GITHUB_TOKEN`, Jekyll Gist will use the Gist API to speed up site generation.
+
 ## Disabling `noscript` support
 
 By default, Jekyll Gist will make an HTTP call per Gist to retrieve the raw content of the Gist. This information is used to propagate `noscript` tags for search engines and browsers without Javascript support. If you'd like to disable this feature, for example, to speed up builds locally, simply add the following to your site's `_config.yml`:
