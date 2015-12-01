@@ -90,7 +90,7 @@ module Jekyll
       private
 
       def code_from_api(gist_id, filename = nil)
-        gist = client.gist gist_id
+        gist = GistTag.client.gist gist_id
 
         file = if filename.to_s.empty?
           # No file specified, return the value of the first key/value pair
@@ -106,7 +106,7 @@ module Jekyll
         file[:content] if file
       end
 
-      def client
+      def self.client
         @client ||= Octokit::Client.new :access_token => ENV["JEKYLL_GITHUB_TOKEN"]
       end
     end
