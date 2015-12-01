@@ -26,7 +26,7 @@ RSpec.configure do |config|
   end
 
   def doc_with_content(content, opts = {})
-    my_site = site
+    my_site = site(opts)
     Jekyll::Document.new(source_dir('_test/doc.md'), {site: my_site, collection: collection(my_site)})
   end
 
