@@ -54,7 +54,13 @@ module Jekyll
         code = fetch_raw_code(gist_id, filename)
         if !code.nil?
           code = code.force_encoding(@encoding)
-          "<noscript><pre>#{CGI.escapeHTML(code)}</pre></noscript>"
+          code = CGI.escapeHTML(code)
+
+          # CGI.escapeHTML behavior differs in Ruby < 2.0
+          # See https://github.com/jekyll/jekyll-gist/pull/28
+          code = code.gsub("'", "&#39;") if RUBY_VERSION < "2.0"
+
+          "<noscript><pre>#{code}</pre></noscript>"
         else
           Jekyll.logger.warn "Warning:", "The <noscript> tag for your gist #{gist_id} could not"
           Jekyll.logger.warn "", "be generated. This will affect users who do not have"
