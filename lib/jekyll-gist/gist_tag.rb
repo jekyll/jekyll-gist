@@ -99,7 +99,7 @@ module Jekyll
           # .files is a hash of :"filename.extension" => data pairs
           # Rather than using to_sym on arbitrary user input,
           # Find our file by calling to_s on the keys
-          match = gist.files.find { |name, data| name.to_s == filename}
+          match = gist.files.find { |name, data| name.to_s == filename }
           match[1] if match
         end
 
