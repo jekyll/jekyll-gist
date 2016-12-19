@@ -47,7 +47,7 @@ module Jekyll
 
       def gist_script_tag(gist_id, filename = nil)
         url = "https://gist.github.com/#{gist_id}.js"
-        url = "#{url}?file=#{filename}" unless filename.empty?
+        url = "#{url}?file=#{filename}" unless filename.to_s.empty?
         "<script src=\"#{url}\"> </script>"
       end
 
@@ -74,7 +74,7 @@ module Jekyll
         return code_from_api(gist_id, filename) if ENV["JEKYLL_GITHUB_TOKEN"]
 
         url = "https://gist.githubusercontent.com/#{gist_id}/raw"
-        url = "#{url}/#{filename}" unless filename.empty?
+        url = "#{url}/#{filename}" unless filename.to_s.empty?
         uri = URI(url)
         Net::HTTP.start(uri.host, uri.port,
           use_ssl: uri.scheme == 'https',
