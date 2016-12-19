@@ -1,3 +1,7 @@
+## HEAD
+
+  * Don't ask .empty? until it's a String. (#38)
+
 ## 1.4.0 / 2015-12-01
 
   * Allow `noscript` fallback to be disabled (#29)
@@ -21,7 +25,7 @@
   * Re-add support for Ruby 1.9.3. Fixes #11 for 1.9.3 (#14)
   * Replaced `OpenURI` with `Net::HTTP` and introduced timeout of 3 seconds (#11)
 
-## 1.3.1 / 2015-08-16 (yanked)
+## 1.3.1 / 2015-08-16
 
   * Replaced `OpenURI` with `Net::HTTP` and introduced timeout of 3 seconds (#11)
 
