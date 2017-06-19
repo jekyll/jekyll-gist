@@ -14,10 +14,10 @@ module Jekyll
         @settings = context.registers[:site].config['gist']
         if tag_contents = determine_arguments(@markup.strip)
           gist_id, filename = tag_contents[0], tag_contents[1]
-          if context.has_key?(gist_id)
+          if context.key?(gist_id)
             gist_id = context[gist_id]
           end
-          if context.has_key?(filename)
+          if context.key?(filename)
             filename = context[filename]
           end
           noscript_tag = gist_noscript_tag(gist_id, filename)
