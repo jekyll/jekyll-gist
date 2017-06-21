@@ -14,10 +14,10 @@ module Jekyll
         @settings = context.registers[:site].config['gist']
         if tag_contents = determine_arguments(@markup.strip)
           gist_id, filename = tag_contents[0], tag_contents[1]
-          if context.key?(gist_id)
+          if context_contains_key?(context, gist_id)
             gist_id = context[gist_id]
           end
-          if context.key?(filename)
+          if context_contains_key?(context, filename)
             filename = context[filename]
           end
           noscript_tag = gist_noscript_tag(gist_id, filename)
@@ -43,6 +43,16 @@ module Jekyll
       def determine_arguments(input)
         matched = input.match(/\A([\S]+|.*(?=\/).+)\s?(\S*)\Z/)
         [matched[1].strip, matched[2].strip] if matched && matched.length >= 3
+      end
+
+      private
+
+      def context_contains_key?(context, key)
+        if context.respond_to?(:has_key?)
+          context.has_key?(key)
+        else
+          context.key?(key)
+        end
       end
 
       def gist_script_tag(gist_id, filename = nil)
