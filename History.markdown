@@ -2,6 +2,7 @@
 
   * Don't ask .empty? until it's a String. (#38)
   * rename Liquid 4 `has_key?` to `key?` to add compatibility for liquid 4 (#41)
+  * Test against Ruby 2.1 to 2.4 (#45)
 
 ## 1.4.0 / 2015-12-01
 
