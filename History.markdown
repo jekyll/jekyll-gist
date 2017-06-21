@@ -1,7 +1,7 @@
 ## HEAD
 
   * Don't ask .empty? until it's a String. (#38)
-  * rename Liquid 4 has_key to key to add compatibility for liquid 4 (#41)
+  * rename Liquid 4 `has_key?` to `key?` to add compatibility for liquid 4 (#41)
 
 ## 1.4.0 / 2015-12-01
 
