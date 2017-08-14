@@ -1,3 +1,9 @@
+## HEAD
+
+### Documentation
+
+  * replace &#39;plugins&#39; key in config with &#39;gems&#39; (#46)
+
 ## 1.4.1 / 2017-06-21
 
   * Don't ask .empty? until it's a String. (#38)
