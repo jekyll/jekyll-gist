@@ -21,7 +21,7 @@ Or install it yourself as:
 Finally, add the following to your site's `_config.yml`:
 
 ```
-gems:
+plugins:
   - jekyll-gist
 ```
 
