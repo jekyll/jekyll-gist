@@ -49,7 +49,7 @@ module Jekyll
 
       def context_contains_key?(context, key)
         if context.respond_to?(:has_key?)
-          context.key?(key)
+          context.has_key?(key)
         else
           context.key?(key)
         end
