@@ -1,4 +1,4 @@
-TEST_DIR = File.dirname(__FILE__)
+TEST_DIR = __dir__
 TMP_DIR  = File.expand_path("../tmp", TEST_DIR)
 
 require 'webmock/rspec'
@@ -43,7 +43,7 @@ RSpec.configure do |config|
   end
 
   def fixture(name)
-    path = File.expand_path "./fixtures/#{name}.json", File.dirname(__FILE__)
+    path = File.expand_path "fixtures/#{name}.json", __dir__
     File.open(path).read
   end
 end
