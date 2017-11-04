@@ -25,6 +25,8 @@ plugins:
   - jekyll-gist
 ```
 
+:bulb: If you are using a Jekyll version less than `3.5.0`, use the `gems` key instead of `plugins`.
+
 ## Usage
 
 Use the tag as follows in your Jekyll pages, posts and collections:
