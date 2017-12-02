@@ -3,6 +3,7 @@
 ### Documentation
 
   * replace &#39;plugins&#39; key in config with &#39;gems&#39; (#46)
+  * Docs: Remove username in gist (#54)
 
 ### Development Fixes
 
