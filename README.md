@@ -30,7 +30,7 @@ plugins:
 Use the tag as follows in your Jekyll pages, posts and collections:
 
 ```liquid
-{% gist parkr/c08ee0f2726fd0e3909d %}
+{% gist c08ee0f2726fd0e3909d %}
 ```
 
 This will create the associated script tag:
@@ -42,7 +42,7 @@ This will create the associated script tag:
 You may optionally specify a `filename` after the `gist_id`:
 
 ```liquid
-{% gist parkr/c08ee0f2726fd0e3909d test.md %}
+{% gist c08ee0f2726fd0e3909d test.md %}
 ```
 
 This will produce the correct URL to show just the specified file in your post rather than the entire Gist.
