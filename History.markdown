@@ -7,8 +7,12 @@
 
 ### Development Fixes
 
+  * Remove testing for Jekyll 2.x
+  * Requires Ruby > 2.1
+  * Add release script
   * Inherit Jekyll&#39;s rubocop config for consistency (#48)
   * define path with __dir__ (#47)
+
 
 ## 1.4.1 / 2017-06-21
 
