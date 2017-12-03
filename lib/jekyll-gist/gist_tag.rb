@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "cgi"
 require "net/http"
 require "octokit"
@@ -11,7 +13,7 @@ module Jekyll
       def render(context)
         @encoding = context.registers[:site].config["encoding"] || "utf-8"
         @settings = context.registers[:site].config["gist"]
-        if tag_contents = determine_arguments(@markup.strip)
+        if (tag_contents = determine_arguments(@markup.strip))
           gist_id = tag_contents[0]
           filename = tag_contents[1]
           if context_contains_key?(context, gist_id)
@@ -24,7 +26,7 @@ module Jekyll
           script_tag = gist_script_tag(gist_id, filename)
           "#{noscript_tag}#{script_tag}"
         else
-          raise ArgumentError, <<-eos
+          raise ArgumentError, <<-EOS
   Syntax error in tag 'gist' while parsing the following markup:
 
     #{@markup}
@@ -34,7 +36,7 @@ module Jekyll
     {% gist user/1234567 foo.js %}
     {% gist 28949e1d5ee2273f9fd3 %}
     {% gist 28949e1d5ee2273f9fd3 best.md %}
-  eos
+  EOS
         end
       end
 
@@ -74,9 +76,9 @@ module Jekyll
 
           "<noscript><pre>#{code}</pre></noscript>"
         else
-          Jekyll.logger.warn "Warning:", "The <noscript> tag for your gist #{gist_id} could not"
-          Jekyll.logger.warn "", "be generated. This will affect users who do not have"
-          Jekyll.logger.warn "", "JavaScript available or enabled in their browsers."
+          Jekyll.logger.warn "Warning:", "The <noscript> tag for your gist #{gist_id} "
+          Jekyll.logger.warn "", "could not be generated. This will affect users who do "
+          Jekyll.logger.warn "", "not have JavaScript enabled in their browsers."
         end
       end
 

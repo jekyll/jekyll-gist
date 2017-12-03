@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 TEST_DIR = __dir__
 TMP_DIR  = File.expand_path("../tmp", TEST_DIR)
 
