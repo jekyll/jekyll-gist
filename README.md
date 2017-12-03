@@ -8,7 +8,7 @@ Liquid tag for displaying GitHub Gists in Jekyll sites: `{% gist %}`.
 
 Add this line to your application's Gemfile:
 
-    gem 'jekyll-gist'
+    $ gem 'jekyll-gist'
 
 And then execute:
 
@@ -18,12 +18,14 @@ Or install it yourself as:
 
     $ gem install jekyll-gist
 
-Finally, add the following to your site's `_config.yml`:
+Then add the following to your site's `_config.yml`:
 
 ```
 plugins:
   - jekyll-gist
 ```
+
+💡 If you are using a Jekyll version less than 3.5.0, use the `gems` key instead of `plugins`.
 
 ## Usage
 
@@ -51,7 +53,7 @@ This will produce the correct URL to show just the specified file in your post r
 
 ## Disabling `noscript` support
 
-By default, Jekyll Gist will make an HTTP call per Gist to retrieve the raw content of the Gist. This information is used to propagate `noscript` tags for search engines and browsers without Javascript support. If you'd like to disable this feature, for example, to speed up builds locally, simply add the following to your site's `_config.yml`:
+By default, Jekyll Gist will make an HTTP call per Gist to retrieve the raw content of the Gist. This information is used to propagate `noscript` tags for search engines and browsers without Javascript support. If you'd like to disable this feature, for example, to speed up builds locally, add the following to your site's `_config.yml`:
 
 ```yml
 gist:
