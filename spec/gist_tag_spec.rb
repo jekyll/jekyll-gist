@@ -49,16 +49,24 @@ describe(Jekyll::Gist::GistTag) do
     end
 
     context "with file specified" do
-      before { stub_request(:get, "https://gist.githubusercontent.com/#{gist}/raw/#{filename}").to_return(:body => http_output) }
+      before { stub_request(:get, %r!https://gist.githubusercontent.com/#{gist}/raw/.*!).to_return(:body => http_output) }
       let(:gist)     { "mattr-/24081a1d93d2898ecf0f" }
       let(:filename) { "myfile.ext" }
       let(:content)  { "{% gist #{gist} #{filename} %}" }
 
       it "produces the correct script tag" do
-        expect(output).to match(%r!<script src="https:\/\/gist.github.com\/#{gist}.js\?file=#{filename}">\s<\/script>!)
+        expect(output).to match(%r!<script src="https://gist.github.com/#{gist}.js\?file=#{filename}">\s<\/script>!)
       end
       it "produces the correct noscript tag" do
         expect(output).to match(%r!<noscript><pre>&lt;test&gt;true&lt;\/test&gt;<\/pre><\/noscript>\n!)
+      end
+
+      context "with octothorpe in filename" do
+        let(:filename) { "my#file" }
+
+        it "removes special characters from the filename" do
+          expect(output).to match(%r!<script src="https://gist.github.com/#{gist}.js\?file=myfile">\s</script>!)
+        end
       end
     end
 
