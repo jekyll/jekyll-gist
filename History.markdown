@@ -1,5 +1,7 @@
 ## HEAD
 
+## 1.5.0 / 2017-12-03
+
 ### Documentation
 
   * replace &#39;plugins&#39; key in config with &#39;gems&#39; (#46)
