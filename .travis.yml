@@ -6,7 +6,6 @@ notifications:
 branches:
   only:
     - master
-
 rvm:
   - 2.5
   - 2.4
@@ -15,9 +14,9 @@ rvm:
   - 2.1
 env:
   - ""
-  - JEKYLL_VERSION=3.6.2
+  - JEKYLL_VERSION=3.7.0
 matrix:
   include:
     - # GitHub Pages
-      rvm: 2.4.0
+      rvm: 2.4
       env: GH_PAGES=true
