@@ -26,6 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "jekyll", ">= 3.0"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
-  spec.add_development_dependency "rubocop", "~> 0.57.2"
+  spec.add_development_dependency "rubocop-jekyll", "~> 0.1.0"
   spec.add_development_dependency "webmock"
 end
