@@ -3,6 +3,7 @@
 ### Development Fixes
 
   * Test against Ruby 2.5 (#57)
+  * Rely on rubocop-jekyll (#62)
 
 ## 1.5.0 / 2017-12-03
 
