@@ -58,6 +58,7 @@ module Jekyll
 
       def gist_noscript_tag(gist_id, filename = nil)
         return if @settings && @settings["noscript"] == false
+
         code = fetch_raw_code(gist_id, filename)
         if !code.nil?
           code = code.force_encoding(@encoding)
