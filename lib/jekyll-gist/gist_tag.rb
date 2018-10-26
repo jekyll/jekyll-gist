@@ -47,6 +47,7 @@ module Jekyll
       end
 
       # rubocop:disable Style/PreferredHashMethods
+      # Remove the check for `:has_key?` when the plugin drops support for `< Liquid 4.0`
       def context_contains_key?(context, key)
         if context.respond_to?(:has_key?)
           context.has_key?(key)
