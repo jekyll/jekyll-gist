@@ -14,22 +14,24 @@ module Jekyll
         @encoding = context.registers[:site].config["encoding"] || "utf-8"
         @settings = context.registers[:site].config["gist"]
         if (tag_contents = determine_arguments(@markup.strip))
-          gist_id = tag_contents[0]
+          gist_id  = tag_contents[0]
           filename = tag_contents[1]
-          gist_id = context[gist_id] if context_contains_key?(context, gist_id)
+          gist_id  = context[gist_id]  if context_contains_key?(context, gist_id)
           filename = context[filename] if context_contains_key?(context, filename)
+
           noscript_tag = gist_noscript_tag(gist_id, filename)
-          script_tag = gist_script_tag(gist_id, filename)
+          script_tag   = gist_script_tag(gist_id, filename)
+
           "#{noscript_tag}#{script_tag}"
         else
           raise ArgumentError, <<~ERROR
             Syntax error in tag 'gist' while parsing the following markup:
-             #{@markup}
-             Valid syntax:
-              {% gist user/1234567 %}
-              {% gist user/1234567 foo.js %}
-              {% gist 28949e1d5ee2273f9fd3 %}
-              {% gist 28949e1d5ee2273f9fd3 best.md %}
+              #{@markup}
+              Valid syntax:
+                {% gist user/1234567 %}
+                {% gist user/1234567 foo.js %}
+                {% gist 28949e1d5ee2273f9fd3 %}
+                {% gist 28949e1d5ee2273f9fd3 best.md %}
 
           ERROR
         end
@@ -53,6 +55,7 @@ module Jekyll
       def gist_script_tag(gist_id, filename = nil)
         url = "https://gist.github.com/#{gist_id}.js"
         url = "#{url}?file=#{filename}" unless filename.to_s.empty?
+
         "<script src=\"#{url}\"> </script>"
       end
 
@@ -61,8 +64,8 @@ module Jekyll
 
         code = fetch_raw_code(gist_id, filename)
         if code.nil?
-          Jekyll.logger.warn "Warning:", "The <noscript> tag for your gist #{gist_id} "
-          Jekyll.logger.warn "", "could not be generated. This will affect users who do "
+          Jekyll.logger.warn "Warning:", "The <noscript> tag for your gist #{gist_id}"
+          Jekyll.logger.warn "", "could not be generated. This will affect users who do"
           Jekyll.logger.warn "", "not have JavaScript enabled in their browsers."
         else
           code = code.force_encoding(@encoding)
@@ -78,6 +81,7 @@ module Jekyll
         url = "https://gist.githubusercontent.com/#{gist_id}/raw"
         url = "#{url}/#{filename}" unless filename.to_s.empty?
         uri = URI(url)
+
         Net::HTTP.start(uri.host, uri.port,
                         :use_ssl => uri.scheme == "https",
                         :read_timeout => 3, :open_timeout => 3) do |http|
@@ -91,7 +95,6 @@ module Jekyll
 
       def code_from_api(gist_id, filename = nil)
         gist = GistTag.client.gist gist_id
-
         file = if filename.to_s.empty?
                  # No file specified, return the value of the first key/value pair
                  gist.files.first[1]
