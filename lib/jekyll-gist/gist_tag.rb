@@ -17,28 +17,23 @@ module Jekyll
         if (tag_contents = determine_arguments(@markup.strip))
           gist_id = tag_contents[0]
           filename = tag_contents[1]
-          if context_contains_key?(context, gist_id)
-            gist_id = context[gist_id]
-          end
-          if context_contains_key?(context, filename)
-            filename = context[filename]
-          end
+          gist_id = context[gist_id] if context_contains_key?(context, gist_id)
+          filename = context[filename] if context_contains_key?(context, filename)
           filename.delete!(@special_characters)
           noscript_tag = gist_noscript_tag(gist_id, filename)
           script_tag = gist_script_tag(gist_id, filename)
           "#{noscript_tag}#{script_tag}"
         else
-          raise ArgumentError, <<-EOS
-  Syntax error in tag 'gist' while parsing the following markup:
+          raise ArgumentError, <<~ERROR
+            Syntax error in tag 'gist' while parsing the following markup:
+             #{@markup}
+             Valid syntax:
+              {% gist user/1234567 %}
+              {% gist user/1234567 foo.js %}
+              {% gist 28949e1d5ee2273f9fd3 %}
+              {% gist 28949e1d5ee2273f9fd3 best.md %}
 
-    #{@markup}
-
-  Valid syntax:
-    {% gist user/1234567 %}
-    {% gist user/1234567 foo.js %}
-    {% gist 28949e1d5ee2273f9fd3 %}
-    {% gist 28949e1d5ee2273f9fd3 best.md %}
-  EOS
+          ERROR
         end
       end
 
@@ -48,8 +43,6 @@ module Jekyll
         matched = input.match(%r!\A([\S]+|.*(?=\/).+)\s?(\S*)\Z!)
         [matched[1].strip, matched[2].strip] if matched && matched.length >= 3
       end
-
-      private
 
       def context_contains_key?(context, key)
         if context.respond_to?(:has_key?)
@@ -67,6 +60,7 @@ module Jekyll
 
       def gist_noscript_tag(gist_id, filename = nil)
         return if @settings && @settings["noscript"] == false
+
         code = fetch_raw_code(gist_id, filename)
         if !code.nil?
           code = code.force_encoding(@encoding)
@@ -91,8 +85,8 @@ module Jekyll
         url = "#{url}/#{filename}" unless filename.to_s.empty?
         uri = URI(url)
         Net::HTTP.start(uri.host, uri.port,
-          :use_ssl => uri.scheme == "https",
-          :read_timeout => 3, :open_timeout => 3) do |http|
+                        :use_ssl => uri.scheme == "https",
+                        :read_timeout => 3, :open_timeout => 3) do |http|
           request = Net::HTTP::Get.new uri.to_s
           response = http.request(request)
           response.body
@@ -100,8 +94,6 @@ module Jekyll
       rescue SocketError, Net::HTTPError, Net::OpenTimeout, Net::ReadTimeout, TimeoutError
         nil
       end
-
-      private
 
       def code_from_api(gist_id, filename = nil)
         gist = GistTag.client.gist gist_id

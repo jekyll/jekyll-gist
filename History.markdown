@@ -1,5 +1,15 @@
 ## HEAD
 
+### Development Fixes
+
+  * Test against Ruby 2.5 (#57)
+  * Rely on rubocop-jekyll (#62)
+  * chore(deps): rubocop-jekyll 0.3 (#64)
+
+### Major Enhancements
+
+  * chore(deps): drop support for Liquid &lt; 4.0 (#66)
+
 ## 1.5.0 / 2017-12-03
 
 ### Documentation
@@ -14,7 +24,6 @@
   * Add release script
   * Inherit Jekyll&#39;s rubocop config for consistency (#48)
   * define path with __dir__ (#47)
-
 
 ## 1.4.1 / 2017-06-21
 
