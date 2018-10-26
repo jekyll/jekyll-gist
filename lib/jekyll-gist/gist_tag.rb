@@ -35,6 +35,10 @@ module Jekyll
         end
       end
 
+      def self.client
+        @client ||= Octokit::Client.new :access_token => ENV["JEKYLL_GITHUB_TOKEN"]
+      end
+
       private
 
       def determine_arguments(input)
@@ -42,6 +46,7 @@ module Jekyll
         [matched[1].strip, matched[2].strip] if matched && matched.length >= 3
       end
 
+      # rubocop:disable Style/PreferredHashMethods
       def context_contains_key?(context, key)
         if context.respond_to?(:has_key?)
           context.has_key?(key)
@@ -49,6 +54,7 @@ module Jekyll
           context.key?(key)
         end
       end
+      # rubocop:enable Style/PreferredHashMethods
 
       def gist_script_tag(gist_id, filename = nil)
         url = "https://gist.github.com/#{gist_id}.js"
@@ -108,10 +114,6 @@ module Jekyll
                end
 
         file[:content] if file
-      end
-
-      def self.client
-        @client ||= Octokit::Client.new :access_token => ENV["JEKYLL_GITHUB_TOKEN"]
       end
     end
   end
