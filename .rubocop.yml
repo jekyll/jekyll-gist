@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 require: rubocop-jekyll
 inherit_gem:
   rubocop-jekyll: .rubocop.yml
@@ -7,23 +9,3 @@ AllCops:
   Exclude:
     - vendor/**/*
     - spec/*.rb
-
-Lint/IneffectiveAccessModifier:
-  Exclude:
-    - lib/jekyll-gist/gist_tag.rb
-
-Lint/ShadowedException:
-  Exclude:
-    - lib/jekyll-gist/gist_tag.rb
-
-Metrics/AbcSize:
-  Exclude:
-    - lib/jekyll-gist/gist_tag.rb
-
-Metrics/MethodLength:
-  Exclude:
-    - lib/jekyll-gist/gist_tag.rb
-
-Style/PreferredHashMethods:
-  Exclude:
-    - lib/jekyll-gist/gist_tag.rb
