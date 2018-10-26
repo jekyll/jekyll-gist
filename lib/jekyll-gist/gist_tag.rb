@@ -60,16 +60,15 @@ module Jekyll
         return if @settings && @settings["noscript"] == false
 
         code = fetch_raw_code(gist_id, filename)
-        if !code.nil?
-          code = code.force_encoding(@encoding)
-          code = CGI.escapeHTML(code)
-          code = code.gsub("'", "&#39;")
-
-          "<noscript><pre>#{code}</pre></noscript>"
-        else
+        if code.nil?
           Jekyll.logger.warn "Warning:", "The <noscript> tag for your gist #{gist_id} "
           Jekyll.logger.warn "", "could not be generated. This will affect users who do "
           Jekyll.logger.warn "", "not have JavaScript enabled in their browsers."
+        else
+          code = code.force_encoding(@encoding)
+          code = CGI.escapeHTML(code).gsub("'", "&#39;")
+
+          "<noscript><pre>#{code}</pre></noscript>"
         end
       end
 
