@@ -63,10 +63,7 @@ module Jekyll
         if !code.nil?
           code = code.force_encoding(@encoding)
           code = CGI.escapeHTML(code)
-
-          # CGI.escapeHTML behavior differs in Ruby < 2.0
-          # See https://github.com/jekyll/jekyll-gist/pull/28
-          code = code.gsub("'", "&#39;") if RUBY_VERSION < "2.0"
+          code = code.gsub("'", "&#39;")
 
           "<noscript><pre>#{code}</pre></noscript>"
         else
