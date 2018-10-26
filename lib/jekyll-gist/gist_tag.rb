@@ -46,16 +46,9 @@ module Jekyll
         [matched[1].strip, matched[2].strip] if matched && matched.length >= 3
       end
 
-      # rubocop:disable Style/PreferredHashMethods
-      # Remove the check for `:has_key?` when the plugin drops support for `< Liquid 4.0`
       def context_contains_key?(context, key)
-        if context.respond_to?(:has_key?)
-          context.has_key?(key)
-        else
-          context.key?(key)
-        end
+        context.key?(key)
       end
-      # rubocop:enable Style/PreferredHashMethods
 
       def gist_script_tag(gist_id, filename = nil)
         url = "https://gist.github.com/#{gist_id}.js"
