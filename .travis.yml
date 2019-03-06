@@ -1,19 +1,22 @@
 language: ruby
-script : script/cibuild
-sudo: false
-notifications:
-  email: false
-branches:
-  only:
-    - master
+cache:bundler
 rvm:
   - 2.6
   - 2.4
+
+script : script/cibuild
+
+branches:
+  only:
+    - master
 env:
-  - ""
   - JEKYLL_VERSION=3.7.4
+
 matrix:
   include:
     - # GitHub Pages
-      rvm: 2.5.1
+      rvm: 2.5.3
       env: GH_PAGES=true
+
+notifications:
+  email: false
