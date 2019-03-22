@@ -1,4 +1,4 @@
-## HEAD
+## 1.6.0 / 2019-03-22
 
 ### Development Fixes
 
