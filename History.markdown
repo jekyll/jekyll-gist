@@ -10,6 +10,10 @@
 
   * chore(deps): drop support for Liquid &lt; 4.0 (#66)
 
+### Bug Fixes
+
+  * Re-introduce Ruby 2.3 support and test Jekyll 3.7+ (#72)
+
 ## 1.5.0 / 2017-12-03
 
 ### Documentation
