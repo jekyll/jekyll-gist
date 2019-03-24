@@ -20,8 +20,8 @@ module Jekyll
         if (tag_contents = determine_arguments(@markup.strip))
           gist_id  = tag_contents[0]
           filename = tag_contents[1]
-          gist_id  = context[gist_id]  if context_contains_key?(context, gist_id)
-          filename = context[filename] if context_contains_key?(context, filename)
+          gist_id  = context[gist_id]  if context.key?(gist_id)
+          filename = context[filename] if context.key?(filename)
 
           noscript_tag = gist_noscript_tag(gist_id, filename)
           script_tag   = gist_script_tag(gist_id, filename)
@@ -48,10 +48,6 @@ module Jekyll
       def determine_arguments(input)
         matched = input.match(%r!\A([\S]+|.*(?=\/).+)\s?(\S*)\Z!)
         [matched[1].strip, matched[2].strip] if matched && matched.length >= 3
-      end
-
-      def context_contains_key?(context, key)
-        context.key?(key)
       end
 
       def gist_script_tag(gist_id, filename = nil)
