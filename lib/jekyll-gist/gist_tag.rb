@@ -10,6 +10,10 @@ Net::ReadTimeout = Class.new(RuntimeError) unless Net.const_defined?(:ReadTimeou
 module Jekyll
   module Gist
     class GistTag < Liquid::Tag
+      def self.client
+        @client ||= Octokit::Client.new :access_token => ENV["JEKYLL_GITHUB_TOKEN"]
+      end
+
       def render(context)
         @encoding = context.registers[:site].config["encoding"] || "utf-8"
         @settings = context.registers[:site].config["gist"]
@@ -37,10 +41,6 @@ module Jekyll
 
           ERROR
         end
-      end
-
-      def self.client
-        @client ||= Octokit::Client.new :access_token => ENV["JEKYLL_GITHUB_TOKEN"]
       end
 
       private
