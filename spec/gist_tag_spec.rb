@@ -168,7 +168,7 @@ describe(Jekyll::Gist::GistTag) do
       let(:gist) { "" }
 
       it "raises an error" do
-        expect(-> { output }).to raise_error
+        expect(-> { output }).to raise_error(ArgumentError)
       end
     end
   end
