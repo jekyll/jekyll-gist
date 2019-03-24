@@ -26,12 +26,14 @@ module Jekyll
         else
           raise ArgumentError, <<~ERROR
             Syntax error in tag 'gist' while parsing the following markup:
+
               #{@markup}
-              Valid syntax:
-                {% gist user/1234567 %}
-                {% gist user/1234567 foo.js %}
-                {% gist 28949e1d5ee2273f9fd3 %}
-                {% gist 28949e1d5ee2273f9fd3 best.md %}
+
+            Valid syntax:
+              {% gist user/1234567 %}
+              {% gist user/1234567 foo.js %}
+              {% gist 28949e1d5ee2273f9fd3 %}
+              {% gist 28949e1d5ee2273f9fd3 best.md %}
 
           ERROR
         end

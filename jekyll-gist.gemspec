@@ -14,18 +14,18 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/jekyll/jekyll-gist"
   spec.license       = "MIT"
 
-  spec.required_ruby_version = ">= 2.3.0"
-
   spec.files         = `git ls-files -z`.split("\x0")
-  spec.executables   = spec.files.grep(%r!^bin/!) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r!^(test|spec|features)/!)
+  spec.test_files    = spec.files.grep(%r!^spec/!)
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "octokit", "~> 4.2"
-  spec.add_development_dependency "bundler", "~> 1.6"
-  spec.add_development_dependency "jekyll", ">= 3.5"
+  spec.required_ruby_version = ">= 2.3.0"
+
+  spec.add_runtime_dependency "jekyll", ">= 3.7", "< 5.0"
+  spec.add_runtime_dependency "octokit", "~> 4.2"
+
+  spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
-  spec.add_development_dependency "rubocop-jekyll", "~> 0.3"
+  spec.add_development_dependency "rubocop-jekyll", "~> 0.4"
   spec.add_development_dependency "webmock"
 end
