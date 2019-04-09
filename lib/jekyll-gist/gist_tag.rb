@@ -11,6 +11,7 @@ module Jekyll
   module Gist
     class GistTag < Liquid::Tag
       def render(context)
+        @special_characters = "#"
         @encoding = context.registers[:site].config["encoding"] || "utf-8"
         @settings = context.registers[:site].config["gist"]
         if (tag_contents = determine_arguments(@markup.strip))
@@ -18,6 +19,7 @@ module Jekyll
           filename = tag_contents[1]
           gist_id = context[gist_id] if context_contains_key?(context, gist_id)
           filename = context[filename] if context_contains_key?(context, filename)
+          filename.delete!(@special_characters)
           noscript_tag = gist_noscript_tag(gist_id, filename)
           script_tag = gist_script_tag(gist_id, filename)
           "#{noscript_tag}#{script_tag}"
