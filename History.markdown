@@ -13,6 +13,7 @@
 ### Bug Fixes
 
   * Re-introduce Ruby 2.3 support and test Jekyll 3.7+ (#72)
+  * Use Liquid::Tag#raw to clarify error message (#73)
 
 ## 1.5.0 / 2017-12-03
 
