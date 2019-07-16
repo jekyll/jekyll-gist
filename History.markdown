@@ -5,6 +5,7 @@
   * Test against Ruby 2.5 (#57)
   * Rely on rubocop-jekyll (#62)
   * chore(deps): rubocop-jekyll 0.3 (#64)
+  * Refactor GistTag (#65)
 
 ### Major Enhancements
 
