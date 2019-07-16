@@ -7,11 +7,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 1
-Lint/IneffectiveAccessModifier:
-  Exclude:
-    - 'lib/jekyll-gist/gist_tag.rb'
-
-# Offense count: 1
 Lint/ShadowedException:
   Exclude:
     - 'lib/jekyll-gist/gist_tag.rb'
@@ -19,13 +14,5 @@ Lint/ShadowedException:
 # Offense count: 1
 # Configuration parameters: Max.
 Metrics/AbcSize:
-  Exclude:
-    - 'lib/jekyll-gist/gist_tag.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: short, verbose
-Style/PreferredHashMethods:
   Exclude:
     - 'lib/jekyll-gist/gist_tag.rb'
