@@ -25,7 +25,7 @@ module Jekyll
           raise ArgumentError, <<~ERROR
             Syntax error in tag 'gist' while parsing the following markup:
 
-              #{@markup}
+              '{% #{raw.strip} %}'
 
             Valid syntax:
               {% gist user/1234567 %}
