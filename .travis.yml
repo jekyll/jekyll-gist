@@ -1,9 +1,8 @@
 language: ruby
 cache: bundler
 rvm:
-  - &latest_ruby 2.6
-  - 2.4
-  - 2.3
+  - &latest_ruby 2.7
+  - 2.5
 
 script : script/cibuild
 
@@ -17,9 +16,9 @@ matrix:
   include:
     - # GitHub Pages
       rvm: 2.5.3
-      env: JEKYLL_VERSION="~> 3.7.4"
+      env: JEKYLL_VERSION="~> 3.8.5"
     - rvm: *latest_ruby
-      env: JEKYLL_VERSION=">= 4.0.0.pre.alpha1"
+      env: JEKYLL_VERSION="~> 4.0"
 
 notifications:
   email: false
