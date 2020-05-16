@@ -54,7 +54,7 @@ module Jekyll
         url = "https://gist.github.com/#{gist_id}.js"
         url = "#{url}?file=#{filename}" unless filename.to_s.empty?
 
-        "<script src=\"#{url}\"> </script>"
+        "<script src=\"#{url}\" loading="lazy"> </script>"
       end
 
       def gist_noscript_tag(gist_id, filename = nil)
